@@ -12,7 +12,26 @@ library(dplyr)
 ```
 
 # Loading the data 
+```R
+adata.data = read.table("/content/GSM4008673_Cord-Blood-CD34P1_dge.txt",row.names = 1,header = T)
+```
+# QC
+```R
+# Selecting cells with at least 500 transcripts
+adata.data_500more = adata.data[,colSums(adata.data)>=500]
+colnames(adata.data_500more) <- paste("2",colnames(adata.data_500more),sep = ".")
+colnames(adata.data_500more) <- paste("CordBlood",colnames(adata.data_500more),sep = "_")
+adata <- CreateSeuratObject(counts = Matrix(as.matrix(adata.data_500more),sparse=T),
+                            min.cells = 3, min.features = 300,names.delim = "\\.")
+# Adding Mitochondrial percentage metadata
+adata[["percent.mt"]] <- PercentageFeatureSet(adata, pattern = "^MT-")
+# QC plots
+VlnPlot(adata, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 
+plot1 <- FeatureScatter(adata, feature1 = "nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(adata, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+plot1 + plot2
+```
 # Processing single-cell data
 ## Lymph nodes data (Kim et al)
 
