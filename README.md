@@ -1,6 +1,18 @@
 # SinglecellWorkflow
 This repository is a notebook for me for establishment of a proper single-cell RNASeq data analysis.
 
+# Installing and loading libraries
+```R
+install.packages("Seurat")
+devtools::install_github('immunogenomics/presto')
+devtools::install_github("ImmuneDynamics/Spectre")
+library(Seurat)
+library(Matrix)
+library(dplyr)
+```
+
+# Loading the data 
+
 # Processing single-cell data
 ## Lymph nodes data (Kim et al)
 
