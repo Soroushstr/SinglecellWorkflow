@@ -23,13 +23,19 @@ pbmc.4.2.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso s
 pbmc.4.3.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso single cell/GSE134335/GSM4008644_Adult-Peripheral-Blood4-3_dge.txt.gz",row.names = 1,header = T)
 ```
 # QC
+Cells with at least 300 Unique Molecular Identifiers (UMIs) were selected from each peripheral blood dataset.
 ```R
-# Selecting cells with at least 500 transcripts
-adata.data_500more = adata.data[,colSums(adata.data)>=500]
-colnames(adata.data_500more) <- paste("2",colnames(adata.data_500more),sep = ".")
-colnames(adata.data_500more) <- paste("CordBlood",colnames(adata.data_500more),sep = "_")
-adata <- CreateSeuratObject(counts = Matrix(as.matrix(adata.data_500more),sparse=T),
+pbmc.1.data_500more = pbmc.1.data[,colSums(pbmc.1.data)>=300]
+colnames(pbmc.1.data_500more) <- paste("1",colnames(pbmc.1.data_500more),sep = ".")
+colnames(pbmc.1.data_500more) <- paste("PeriBlood",colnames(pbmc.1.data_500more),sep = "_")
+```
+
+Cells with at least 300 and lower than 2500 transcripts, and transcripts present in at least 3 cells were selected as a subset of each dataset. 
+```R
+pbmc.1 <- CreateSeuratObject(counts = Matrix(as.matrix(pbmc.1.data_500more),sparse=T),
                             min.cells = 3, min.features = 300,names.delim = "\\.")
+```
+```R
 # Adding Mitochondrial percentage metadata
 adata[["percent.mt"]] <- PercentageFeatureSet(adata, pattern = "^MT-")
 # QC plots
