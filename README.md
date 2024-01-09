@@ -12,8 +12,15 @@ library(dplyr)
 ```
 
 # Loading the data 
+All peripheral blood datasets were preprocessed and normalized and then merged for further analysis and establishment of a reference Basophil dataset. 
 ```R
-adata.data = read.table("/content/GSM4008673_Cord-Blood-CD34P1_dge.txt",row.names = 1,header = T)
+pbmc.1.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso single cell/GSE134335/GSM4008638_Adult-Peripheral-Blood1_dge.txt.gz",row.names = 1,header = T)
+pbmc.2.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso single cell/GSE134335/GSM4008639_Adult-Peripheral-Blood2_dge.txt.gz",row.names = 1,header = T)
+pbmc.3.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso single cell/GSE134335/GSM4008640_Adult-Peripheral-Blood3-1_dge.txt.gz",row.names = 1,header = T)
+pbmc.3.2.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso single cell/GSE134335/GSM4008641_Adult-Peripheral-Blood3-2_dge.txt.gz",row.names = 1,header = T)
+pbmc.4.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso single cell/GSE134335/GSM4008642_Adult-Peripheral-Blood4-1_dge.txt.gz",row.names = 1,header = T)
+pbmc.4.2.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso single cell/GSE134335/GSM4008643_Adult-Peripheral-Blood4-2_dge.txt.gz",row.names = 1,header = T)
+pbmc.4.3.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso single cell/GSE134335/GSM4008644_Adult-Peripheral-Blood4-3_dge.txt.gz",row.names = 1,header = T)
 ```
 # QC
 ```R
