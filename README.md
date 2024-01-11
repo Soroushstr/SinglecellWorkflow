@@ -43,6 +43,11 @@ pbmc.1[["percent.mt"]] <- PercentageFeatureSet(pbmc.1, pattern = "^MT-")
 pbmc.1 <- subset(pbmc.1, subset = nFeature_RNA > 300 & nFeature_RNA < 2500 & percent.mt < 20)
 ```
 
+Log-normalizing counts
+```R
+pbmc.1 <- NormalizeData(pbmc.1, normalization.method = "LogNormalize", scale.factor = 10000)
+```
+
 ```R
 # Adding Mitochondrial percentage metadata
 adata[["percent.mt"]] <- PercentageFeatureSet(adata, pattern = "^MT-")
