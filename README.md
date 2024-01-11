@@ -35,6 +35,14 @@ Cells with at least 300 and lower than 2500 transcripts, and transcripts present
 pbmc.1 <- CreateSeuratObject(counts = Matrix(as.matrix(pbmc.1.data_500more),sparse=T),
                             min.cells = 3, min.features = 300,names.delim = "\\.")
 ```
+
+Creating a column corresponding to mitochondrial gene content to metadata
+Selecting cells with <20% mitochondrial content
+```R
+pbmc.1[["percent.mt"]] <- PercentageFeatureSet(pbmc.1, pattern = "^MT-")
+pbmc.1 <- subset(pbmc.1, subset = nFeature_RNA > 300 & nFeature_RNA < 2500 & percent.mt < 20)
+```
+
 ```R
 # Adding Mitochondrial percentage metadata
 adata[["percent.mt"]] <- PercentageFeatureSet(adata, pattern = "^MT-")
