@@ -22,7 +22,8 @@ pbmc.4.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso sin
 pbmc.4.2.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso single cell/GSE134335/GSM4008643_Adult-Peripheral-Blood4-2_dge.txt.gz",row.names = 1,header = T)
 pbmc.4.3.data <- read.table(file = "C:/Users/sh/Downloads/Old Laptop/EPFL/Baso single cell/GSE134335/GSM4008644_Adult-Peripheral-Blood4-3_dge.txt.gz",row.names = 1,header = T)
 ```
-# QC
+# Preprocessing
+## QC
 Cells with at least 300 Unique Molecular Identifiers (UMIs) were selected from each peripheral blood dataset.
 ```R
 pbmc.1.data_500more = pbmc.1.data[,colSums(pbmc.1.data)>=300]
@@ -48,13 +49,19 @@ Log-normalizing counts
 ```R
 pbmc.1 <- NormalizeData(pbmc.1, normalization.method = "LogNormalize", scale.factor = 10000)
 ```
-
+## Merging
 Once the preprocessing and normalization was done for all datasets, they get merged into one dataset
 ```R
 pbmc.normalized <- merge(pbmc.1, y = c(pbmc.2, pbmc.3, pbmc.3.2, pbmc.4, pbmc.4.2, pbmc.4.3), 
                          add.cell.ids = c("R1", "R2", "R3", "R3.2", "R4", "R4.2", "R4.3"), project = "PBMC12K",
                          merge.data = TRUE)
+all.genes <- rownames(pbmc.normalized)
 ```
+## Scale and center data
+```R
+pbmc.normalized <- ScaleData(pbmc.normalized, features = all.genes)
+```
+
 ```R
 # Adding Mitochondrial percentage metadata
 adata[["percent.mt"]] <- PercentageFeatureSet(adata, pattern = "^MT-")
