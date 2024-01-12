@@ -35,7 +35,7 @@ Cells with at least 300 and lower than 2500 transcripts, and transcripts present
 pbmc.1 <- CreateSeuratObject(counts = Matrix(as.matrix(pbmc.1.data_500more),sparse=T),
                             min.cells = 3, min.features = 300,names.delim = "\\.")
 ```
-
+## Removing cells with high mitochondrial content
 Creating a column corresponding to mitochondrial gene content to metadata
 Selecting cells with <20% mitochondrial content
 ```R
@@ -43,11 +43,18 @@ pbmc.1[["percent.mt"]] <- PercentageFeatureSet(pbmc.1, pattern = "^MT-")
 pbmc.1 <- subset(pbmc.1, subset = nFeature_RNA > 300 & nFeature_RNA < 2500 & percent.mt < 20)
 ```
 
+## Normalization
 Log-normalizing counts
 ```R
 pbmc.1 <- NormalizeData(pbmc.1, normalization.method = "LogNormalize", scale.factor = 10000)
 ```
 
+Once the preprocessing and normalization was done for all datasets, they get merged into one dataset
+```R
+pbmc.normalized <- merge(pbmc.1, y = c(pbmc.2, pbmc.3, pbmc.3.2, pbmc.4, pbmc.4.2, pbmc.4.3), 
+                         add.cell.ids = c("R1", "R2", "R3", "R3.2", "R4", "R4.2", "R4.3"), project = "PBMC12K",
+                         merge.data = TRUE)
+```
 ```R
 # Adding Mitochondrial percentage metadata
 adata[["percent.mt"]] <- PercentageFeatureSet(adata, pattern = "^MT-")
