@@ -49,6 +49,7 @@ Log-normalizing counts
 ```R
 pbmc.1 <- NormalizeData(pbmc.1, normalization.method = "LogNormalize", scale.factor = 10000)
 ```
+
 ## Merging
 Once the preprocessing and normalization was done for all datasets, they get merged into one dataset
 ```R
@@ -57,10 +58,26 @@ pbmc.normalized <- merge(pbmc.1, y = c(pbmc.2, pbmc.3, pbmc.3.2, pbmc.4, pbmc.4.
                          merge.data = TRUE)
 all.genes <- rownames(pbmc.normalized)
 ```
+
+## Finding Variable Genes
+To clarify difference between cell types, top 2000 variable genes, based on the feature variances are selected for downstream analyses
+```R
+pbmc.normalized <- FindVariableFeatures(pbmc.normalized, selection.method = "vst", nfeatures = 2000)
+```
+
 ## Scale and center data
 ```R
 pbmc.normalized <- ScaleData(pbmc.normalized, features = all.genes)
 ```
+
+# Analysis and Processing
+## PCA
+Doing Principle Component Analysis (PCA) and plotting heatmap of top 10 PCs
+```R
+pbmc.normalized <- RunPCA(pbmc.normalized, features = VariableFeatures(object = pbmc.normalized))
+DimHeatmap(pbmc.normalized, dims = 1:10, cells = 500, balanced = TRUE)
+```
+
 
 ```R
 # Adding Mitochondrial percentage metadata
