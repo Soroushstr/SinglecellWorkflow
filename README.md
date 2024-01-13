@@ -78,16 +78,17 @@ pbmc.normalized <- RunPCA(pbmc.normalized, features = VariableFeatures(object = 
 DimHeatmap(pbmc.normalized, dims = 1:10, cells = 500, balanced = TRUE)
 ```
 
-
+## Selecting PCs
+To select significant Principle Components (PCs), Jackstraw Plot and Elbow Plot methods are utilized.
+### Jackstraw method
 ```R
-# Adding Mitochondrial percentage metadata
-adata[["percent.mt"]] <- PercentageFeatureSet(adata, pattern = "^MT-")
-# QC plots
-VlnPlot(adata, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
-
-plot1 <- FeatureScatter(adata, feature1 = "nCount_RNA", feature2 = "percent.mt")
-plot2 <- FeatureScatter(adata, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-plot1 + plot2
+pbmc.normalized <- JackStraw(object = pbmc.normalized, reduction = "pca")
+pbmc.normalized <- ScoreJackStraw(pbmc.normalized, dims = 1:20)
+JackStrawPlot(object = pbmc.normalized, dims = 1:20)
+```
+### Elbow plot method
+```R
+ElbowPlot(pbmc.normalized)
 ```
 # Processing single-cell data
 ## Lymph nodes data (Kim et al)
