@@ -102,6 +102,7 @@ Running UMAP and Plotting cells in the UMAP representation
 pbmc.normalized <- RunUMAP(pbmc.normalized, dims = 1:11)
 DimPlot(pbmc.normalized, reduction = "umap")
 ```
+![UMAPPBMC](https://github.com/Soroushstr/SinglecellWorkflow/blob/4135c99ad056b70f236e29c78377d0380bf0ef98/UMAP%20PBMC.png)
 
 # Processing single-cell data
 ## Lymph nodes data (Kim et al)
