@@ -90,6 +90,19 @@ JackStrawPlot(object = pbmc.normalized, dims = 1:20)
 ```R
 ElbowPlot(pbmc.normalized)
 ```
+## Clustering
+Finding neighbors and clustering cells
+```R
+pbmc.normalized <- FindNeighbors(pbmc.normalized, dims = 1:11)
+pbmc.normalized <- FindClusters(pbmc.normalized, resolution = 0.5)
+```
+## UMAP
+Running UMAP and Plotting cells in the UMAP representation
+```R
+pbmc.normalized <- RunUMAP(pbmc.normalized, dims = 1:11)
+DimPlot(pbmc.normalized, reduction = "umap")
+```
+
 # Processing single-cell data
 ## Lymph nodes data (Kim et al)
 
