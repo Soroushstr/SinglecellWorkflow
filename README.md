@@ -87,7 +87,7 @@ pbmc.normalized <- ScoreJackStraw(pbmc.normalized, dims = 1:20)
 JackStrawPlot(object = pbmc.normalized, dims = 1:20)
 ```
 Jackstraw plot of the Principle Components (PCs) of the peripheral samples:
-!(Jackstraw peripheral blood PCs)[
+!(Jackstraw peripheral blood PCs)[https://github.com/Soroushstr/SinglecellWorkflow/blob/ecf915e63fc0135155dfdb4e51e4b98e8b8e8a15/PBMC%20Jackstraw.png]
 ### Elbow plot method
 ```R
 ElbowPlot(pbmc.normalized)
