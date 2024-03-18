@@ -45,6 +45,10 @@ pbmc.1 <- NormalizeData(pbmc.1, normalization.method = "LogNormalize", scale.fac
 ```
 
 ## Merging
+If you are using only one dataset, you can only do following line of code and continue your analysis
+```R
+pbmc.normalized <- pbmc.1
+```
 Once the preprocessing and normalization was done for all datasets, they get merged into one dataset
 ```R
 pbmc.normalized <- merge(pbmc.1, y = c(pbmc.2, pbmc.3, pbmc.3.2, pbmc.4, pbmc.4.2, pbmc.4.3), 
